@@ -2,5 +2,10 @@ A feeble attempt to solve a Fredholm integral equation of the 2nd kind using
 the GNU GSL. Also my first foray into C in a looooong time. Expect lots of
 breakage!
 
+
+
+
+
+REFERENCES
 http://www.gnu.org/s/gsl/
 http://en.wikipedia.org/wiki/Fredholm_integral_equation

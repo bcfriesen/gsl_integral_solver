@@ -4,36 +4,47 @@
 #include <gsl/gsl_linalg.h>
 
 // size of vectors/matrices
-#define MAX 100
+#define MAX 500
 
 void get_kernel(gsl_matrix *ak, gsl_vector *x, gsl_vector *xp);
-void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *w);
+void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f,
+                  gsl_vector *w);
 void get_g(gsl_vector *g, gsl_vector *eks);
+void get_fred2_interp(gsl_vector *grid, double a, double b, gsl_vector *t,
+                      gsl_vector *f, gsl_vector *w, gsl_vector *new_result);
 
 int main (void)
 {
   int a = 0, b = 4, i;
-  gsl_vector *tmp   = gsl_vector_alloc(MAX);
-  gsl_vector *grid  = gsl_vector_alloc(MAX);
-  gsl_vector *gridp = gsl_vector_alloc(MAX);
-  gsl_vector *t     = gsl_vector_alloc(MAX);
-  gsl_vector *f     = gsl_vector_alloc(MAX);
-  gsl_vector *w     = gsl_vector_alloc(MAX);
+  gsl_vector *tmp        = gsl_vector_alloc(MAX);
+  gsl_vector *grid       = gsl_vector_alloc(MAX);
+  gsl_vector *t          = gsl_vector_alloc(MAX);
+  gsl_vector *f          = gsl_vector_alloc(MAX);
+  gsl_vector *w          = gsl_vector_alloc(MAX);
+  gsl_vector *new_result = gsl_vector_alloc(MAX);
 
   for (i = 0; i < MAX; i++)
   {
-    gsl_vector_set(grid, i, (double)i/10.0);
-    gsl_vector_set(gridp, i, (double)i/10.0);
+    gsl_vector_set(grid, i, (double)a + (double)i*(((double)b - (double)a)/MAX));
   }
 
+  // first solve integral equation at Gauss-Legendre quadrature points
   fred2_solver(a, b, t, f, w);
+
+  // now use Nystrom interpolation to use the points WE want
+  get_fred2_interp(grid, a, b, t, f, w, new_result);
+
+  for (i = 0; i < MAX; i++)
+  {
+    printf("%18.5f %18.5f\n", gsl_vector_get(grid, i), gsl_vector_get(new_result, i));
+  }
 
   gsl_vector_free(tmp);
   gsl_vector_free(grid);
-  gsl_vector_free(gridp);
   gsl_vector_free(t);
   gsl_vector_free(f);
   gsl_vector_free(w);
+  gsl_vector_free(new_result);
 
   return 0;
 }
@@ -61,10 +72,9 @@ void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *
     error = gsl_integration_glfixed_point(a, b, i, &ptsi, &wghtsi, glgrid);
     gsl_vector_set(t, i, ptsi);
     gsl_vector_set(w, i, wghtsi);
-    printf("%18d %.18f %.18f\n", i, gsl_vector_get(t, i), gsl_vector_get(w, i));
   }
 
-
+  get_kernel(ak, t, t);
   get_g(g, t);
 
   // fill in unit matrix first
@@ -90,6 +100,33 @@ void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *
   gsl_matrix_free(ktilde);
   gsl_vector_free(g);
   gsl_matrix_free(ak);
+  return;
+}
+
+
+void get_fred2_interp(gsl_vector *grid, double a, double b, gsl_vector *t,
+                      gsl_vector *f, gsl_vector *w, gsl_vector *new_result)
+{
+  gsl_matrix *ak = gsl_matrix_alloc(MAX, MAX);
+  gsl_vector *g = gsl_vector_alloc(MAX);
+  int i, j;
+  double sum;
+
+  get_kernel(ak, grid, t);
+  get_g(g, grid);
+
+  for (i = 0; i < MAX; i++)
+  {
+    sum = 0.0;
+    for (j = 0; j < MAX; j++)
+    {
+      sum += gsl_matrix_get(ak, i, j)*gsl_vector_get(w, j)*gsl_vector_get(f, j);
+    }
+    gsl_vector_set(new_result, i, gsl_vector_get(g, i) + sum);
+  }
+
+  gsl_matrix_free(ak);
+  gsl_vector_free(g);
   return;
 }
 
