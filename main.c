@@ -6,6 +6,10 @@
 // size of vectors/matrices
 #define MAX 100
 
+void get_kernel(gsl_matrix *ak, gsl_vector *x, gsl_vector *xp);
+void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *w);
+void get_g(gsl_vector *g, gsl_vector *eks);
+
 int main (void)
 {
   int a = 0, b = 4, i;
@@ -57,7 +61,7 @@ void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *
     error = gsl_integration_glfixed_point(a, b, i, &ptsi, &wghtsi, glgrid);
     gsl_vector_set(t, i, ptsi);
     gsl_vector_set(w, i, wghtsi);
-    printf("%18d, %.18f, %.18f", i, gsl_vector_get(t, i), gsl_vector_get(w, i));
+    printf("%18d %.18f %.18f\n", i, gsl_vector_get(t, i), gsl_vector_get(w, i));
   }
 
 
