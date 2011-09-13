@@ -8,7 +8,7 @@
 
 int main (void)
 {
-  int a = 0, b = 4, i
+  int a = 0, b = 4, i;
   gsl_vector *tmp   = gsl_vector_alloc(MAX);
   gsl_vector *grid  = gsl_vector_alloc(MAX);
   gsl_vector *gridp = gsl_vector_alloc(MAX);
@@ -57,7 +57,9 @@ void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *
     error = gsl_integration_glfixed_point(a, b, i, &ptsi, &wghtsi, glgrid);
     gsl_vector_set(t, i, ptsi);
     gsl_vector_set(w, i, wghtsi);
+    printf("%18d, %.18f, %.18f", i, gsl_vector_get(t, i), gsl_vector_get(w, i));
   }
+
 
   get_g(g, t);
 
