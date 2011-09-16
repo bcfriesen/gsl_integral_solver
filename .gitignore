@@ -1,3 +1,4 @@
 run
 *.o
 *.out
+*.swp

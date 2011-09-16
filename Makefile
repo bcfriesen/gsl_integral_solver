@@ -1,9 +1,11 @@
 CC = gcc
 EXE = run
-CFLAGS = -g -O0 -Wall
-GSL_LIBS = -L/usr/local/lib -lgsl -lgslcblas
-GSL_INC = -I/usr/local/include/gsl
-LDFLAGS = -g -O0 -Wall $(GSL_LIBS)
+
+GSL_INC = -I/home/friesen/include
+GSL_LIBS = -L/home/friesen/lib -lgsl -lgslcblas
+
+CFLAGS = -g -O0 -Wall $(GSL_INC)
+LDFLAGS = -g -O0 -Wall $(GSL_LIBS) -lm
 
 OBJECTS = main.o
 
@@ -13,7 +15,7 @@ $(EXE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(OJBECTS): %.o: %.c
-	$(CC) -c $(CFLAGS) $(GSL_INC) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf $(EXE) $(OBJECTS)
+	rm -rf $(EXE) $(OBJECTS) *.out
