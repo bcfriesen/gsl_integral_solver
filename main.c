@@ -15,7 +15,7 @@ void get_fred2_interp(gsl_vector *grid, double a, double b, gsl_vector *t,
 
 int main (void)
 {
-  int a = 0, b = 4, i;
+  double a = 0.0, b = 4.0, i;
   gsl_vector *tmp        = gsl_vector_alloc(MAX);
   gsl_vector *grid       = gsl_vector_alloc(MAX);
   gsl_vector *t          = gsl_vector_alloc(MAX);
@@ -25,7 +25,7 @@ int main (void)
 
   for (i = 0; i < MAX; i++)
   {
-    gsl_vector_set(grid, i, (double)a + (double)i*(((double)b - (double)a)/MAX));
+    gsl_vector_set(grid, i, a + (double)i*((b - a)/MAX));
   }
 
   // first solve integral equation at Gauss-Legendre quadrature points
