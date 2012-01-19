@@ -2,9 +2,19 @@ A feeble attempt to solve a Fredholm integral equation of the 2nd kind using
 the GNU GSL. Also my first foray into C in a looooong time. Expect lots of
 breakage!
 
+To test the solver, I choose ab initio the kernel K(x,x'), the 'unknown
+function' f(x), and the integration limits (a,b). I use these to solve
+for the auxiliary function g(x). Then I go back and pretend I don't know
+f(x), but I DO know g(x). Then I know what answer the solver should
+produce for f(x) and can compare.
 
+The first case has the following conditions:
 
+K(x,x') = K(x) = 3x
+g(x) = -34x - 1
+(a,b) = (0,4)
 
+The answer (you can check this by hand) is f(x) = 2x - 1.
 
 REFERENCES
 http://www.gnu.org/s/gsl/
