@@ -6,14 +6,19 @@
 #include <aux_g.h>
 #include <kernel.h>
 
-void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *w)
+void fred2_solver(double      a,
+                  double      b,
+                  gsl_vector* t,
+                  gsl_vector* f,
+                  gsl_vector* w)
 {
-  gsl_integration_glfixed_table *glgrid = gsl_integration_glfixed_table_alloc(MAX);
-  gsl_permutation *p = gsl_permutation_alloc(MAX);
-  gsl_matrix *lhs    = gsl_matrix_alloc(MAX, MAX);
-  gsl_matrix *ktilde = gsl_matrix_alloc(MAX, MAX);
-  gsl_matrix *ak     = gsl_matrix_alloc(MAX, MAX);
-  gsl_vector *g = gsl_vector_alloc(MAX);
+  gsl_integration_glfixed_table* glgrid = gsl_integration_glfixed_table_alloc(MAX);
+  gsl_permutation*               p      = gsl_permutation_alloc(MAX);
+  gsl_matrix*                    lhs    = gsl_matrix_alloc(MAX, MAX);
+  gsl_matrix*                    ktilde = gsl_matrix_alloc(MAX, MAX);
+  gsl_matrix*                    ak     = gsl_matrix_alloc(MAX, MAX);
+  gsl_vector*                    g      = gsl_vector_alloc(MAX);
+
   int i, j, error, s;
   double ptsi, wghtsi;
 
@@ -35,7 +40,7 @@ void fred2_solver(double a, double b, gsl_vector *t, gsl_vector *f, gsl_vector *
   {
     for (j = 0; j < MAX; j++)
     {
-      gsl_matrix_set(ktilde, i, j, gsl_matrix_get(ak, i, j)*gsl_vector_get(w, j));
+      gsl_matrix_set(ktilde, i, j, gsl_matrix_get(ak, i, j) * gsl_vector_get(w, j));
     }
   }
 

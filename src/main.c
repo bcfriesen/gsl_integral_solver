@@ -14,12 +14,12 @@ const int MAX = 500;
 int main (void)
 {
   double a = 2.0, b = 5.0, i;
-  gsl_vector *tmp        = gsl_vector_alloc(MAX);
-  gsl_vector *grid       = gsl_vector_alloc(MAX);
-  gsl_vector *t          = gsl_vector_alloc(MAX);
-  gsl_vector *f          = gsl_vector_alloc(MAX);
-  gsl_vector *w          = gsl_vector_alloc(MAX);
-  gsl_vector *new_result = gsl_vector_alloc(MAX);
+  gsl_vector* tmp        = gsl_vector_alloc(MAX);
+  gsl_vector* grid       = gsl_vector_alloc(MAX);
+  gsl_vector* t          = gsl_vector_alloc(MAX);
+  gsl_vector* f          = gsl_vector_alloc(MAX);
+  gsl_vector* w          = gsl_vector_alloc(MAX);
+  gsl_vector* new_result = gsl_vector_alloc(MAX);
 
   // evenly spaced grid
   for (i = 0; i < MAX; i++)

@@ -4,7 +4,9 @@
 #include <params.h>
 
 // K(x,x') = K(x) = sqrt(x')
-void kernel(gsl_matrix *ak, gsl_vector *x, gsl_vector *xp)
+void kernel(gsl_matrix* ak,
+            gsl_vector* x,
+            gsl_vector* xp)
 {
   int i, j;
 
