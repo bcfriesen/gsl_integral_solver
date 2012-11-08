@@ -13,6 +13,7 @@ const int MAX = 500;
 
 int main (void)
 {
+  const char* filename = "test.out";
   const double a = 0.0, b = 4.0;
   int i;
   gsl_vector* tmp        = gsl_vector_alloc(MAX);
@@ -37,7 +38,7 @@ int main (void)
   get_fred2_interp(grid, a, b, t, f, w, new_result);
 
   FILE *fp;
-  fp = fopen("test.out", "w");
+  fp = fopen(filename, "w");
 
   fprintf(fp, "%25s %25s %25s\n", "x", "f(x) (expected)", "f(x) (calculated)");
   for (i = 0; i < MAX; i++)
