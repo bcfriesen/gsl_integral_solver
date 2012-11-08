@@ -14,7 +14,7 @@ const int MAX = 500;
 int main (void)
 {
   const double a = 0.0, b = 4.0;
-  double i;
+  int i;
   gsl_vector* tmp        = gsl_vector_alloc(MAX);
   gsl_vector* grid       = gsl_vector_alloc(MAX);
   gsl_vector* t          = gsl_vector_alloc(MAX);
