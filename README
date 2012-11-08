@@ -1,12 +1,48 @@
-A feeble attempt to solve a Fredholm integral equation of the 2nd kind using
-the GNU GSL. Also my first foray into C in a looooong time. Expect lots of
-breakage!
+/-------------\
+| DESCRIPTION |
+\-------------/
 
-To test the solver, I choose ab initio the kernel K(x,x'), the 'unknown
-function' f(x), and the integration limits (a,b). I use these to solve
-for the auxiliary function g(x). Then I go back and pretend I don't know
-f(x), but I DO know g(x). Then I know what answer the solver should
-produce for f(x) and can compare.
+This routine solves integral equations (both Fredholm and Volterra, and of both
+the 1st and 2nd kind) using the GNU Scientific Library (GSL).
+
+/--------------\
+| DEPENDENCIES |
+\--------------/
+
+CMake: http://cmake.org/
+GNU Scientific Library (GSL): http://www.gnu.org/s/gsl/
+
+/--------------------\
+| BUILD INSTRUCTIONS |
+\--------------------/
+
+1.) First, set the environment variable GSL_DIR to point to the root directory
+of your GSL installation, e.g., /usr/local or $HOME/gsl:
+
+export GSL_DIR=/path/to/gsl
+
+2.) Then create a new directory in which to build the source:
+
+cd /path/to/gsl_integral/solver
+mkdir build
+cd build
+
+3.) Then run CMake:
+
+cmake ..
+
+The resulting binary should be in
+/path/to/gsl_integral_solver/build/src/gsl_integral_solver
+
+/-------------\
+| OTHER NOTES |
+\-------------/
+
+To test the solver, I choose ab initio the kernel K(x,x'), the "unknown
+function" f(x), and the integration limits (a,b). I use these to solve for the
+auxiliary function g(x). Then I go back and pretend I don't know f(x), but I DO
+know g(x). Then I know what answer the solver should produce for f(x) and can
+compare.
 
 The first case has the following conditions:
 
@@ -16,6 +52,9 @@ g(x) = -34x - 1
 
 The answer (you can check this by hand) is f(x) = 2x - 1.
 
-REFERENCES
+/------------\
+| REFERENCES |
+\------------/
+
 http://www.gnu.org/s/gsl/
 http://en.wikipedia.org/wiki/Fredholm_integral_equation
