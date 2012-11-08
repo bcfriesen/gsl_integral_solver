@@ -56,5 +56,6 @@ int main (void)
   gsl_vector_free(f);
   gsl_vector_free(w);
   gsl_vector_free(new_result);
+  gsl_vector_free(analytic);
   return 0;
 }
