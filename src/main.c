@@ -24,7 +24,7 @@ int main (void)
   // evenly spaced grid
   for (i = 0; i < MAX; i++)
   {
-    gsl_vector_set(grid, i, a + (double)i*((b - a)/MAX));
+    gsl_vector_set(grid, i, a + (double)i*((b - a)/(double)MAX));
   }
 
   // first solve integral equation at Gauss-Legendre quadrature points
@@ -51,4 +51,3 @@ int main (void)
   gsl_vector_free(new_result);
   return 0;
 }
-
