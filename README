@@ -9,8 +9,9 @@ the 1st and 2nd kind) using the GNU Scientific Library (GSL).
 | DEPENDENCIES |
 \--------------/
 
-CMake: http://cmake.org/
-GNU Scientific Library (GSL): http://www.gnu.org/s/gsl/
+- C compiler
+- CMake: http://cmake.org/
+- GNU Scientific Library (GSL): http://www.gnu.org/s/gsl/
 
 /--------------------\
 | BUILD INSTRUCTIONS |
@@ -44,7 +45,7 @@ auxiliary function g(x). Then I go back and pretend I don't know f(x), but I DO
 know g(x). Then I know what answer the solver should produce for f(x) and can
 compare.
 
-The first case has the following conditions:
+The first case (hard-coded into this version) has the following conditions:
 
 K(x,x') = K(x) = 3x
 g(x) = -34x - 1
